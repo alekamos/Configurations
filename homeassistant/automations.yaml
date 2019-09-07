@@ -1,0 +1,19 @@
+- id: '1565796716294'
+  alias: Allarme Porta Ingresso
+  trigger:
+  - entity_id: binary_sensor.doorsensorxiaomi_x1_contact
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: person.Alessandro
+    state: not_home
+  - condition: state
+    entity_id: person.mariagrazia
+    state: not_home
+  action:
+  - data:
+      message: Attenzione, porta ingresso aperta e nessuno a casa, farei scattare
+        l'allarme..
+    service: notify.telegram_msg

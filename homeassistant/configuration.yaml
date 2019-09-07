@@ -1,0 +1,124 @@
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+discovery:
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+http:
+   base_url: <urlDominio>:8123
+   ssl_certificate: /config/ssl/cert.pem
+   ssl_key: /config/ssl/privkey.pem
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+
+
+# Example configuration.yaml entry
+media_player:
+  - platform: webostv
+    host: 192.168.1.54
+    name: TV
+    filename: webostv.conf
+    timeout: 5
+    turn_on_action:
+      service: switch.turn_on
+      entity_id: switch.lg
+      
+   
+switch:
+  - platform: wake_on_lan
+    name: lg
+    mac_address: "38:8c:50:6a:e5:f8"
+        
+mqtt:
+  discovery: true
+  broker: 192.168.1.53  # Remove if you want to use builtin-in MQTT broker
+  birth_message:
+    topic: 'hass/status'
+    payload: 'online'
+  will_message:
+    topic: 'hass/status'
+    payload: 'offline'
+    
+
+sensor:
+  - platform: rest
+    name: meteo_esterno_fisica
+    resource: https://www.torinometeo.org/api/v1/realtime/data/torino-pietro-giuria/?format=json
+    method: GET
+    json_attributes:
+      - temperature
+      - relative_humidity
+      - rain_rate
+      - pressure
+      - wind_strength
+    value_template: '{{ value_json.datetime }}'
+  - platform: template
+    sensors:
+      temperaturemeteofisica:
+        value_template: '{{ states.sensor.meteo_esterno_fisica.attributes["temperature"] }}'
+        device_class: temperature
+        unit_of_measurement: 'C'
+        friendly_name: "t. Ext"
+      humiditymeteofisica:
+        value_template: '{{ states.sensor.meteo_esterno_fisica.attributes["relative_humidity"] }}'
+        friendly_name: "rh. ext"
+        device_class: humidity
+        unit_of_measurement: '%'
+      rainratemeteofisica:
+        value_template: '{{ states.sensor.meteo_esterno_fisica.attributes["rain_rate"] }}'
+        unit_of_measurement: 'mm/h'
+        friendly_name: "rain rate"
+      pressuremeteofisica:
+        value_template: '{{ states.sensor.meteo_esterno_fisica.attributes["pressure"] }}'
+        device_class: pressure
+        friendly_name: "pressure"
+        unit_of_measurement: 'hPa'
+      windmeteofisica:
+        friendly_name: "windspeed"
+        value_template: '{{ states.sensor.meteo_esterno_fisica.attributes["wind_strength"] }}'
+        unit_of_measurement: 'km/h'
+  
+sensor 2:
+  - platform: mqtt
+    name: "temp int"
+    state_topic: "rpi2/dht22"
+    unit_of_measurement: 'C'
+    device_class: temperature
+    value_template: "{{ value_json.temperature }}"
+    unique_id: tempInt
+sensor 3:
+  - platform: mqtt
+    name: "hum int"
+    state_topic: "rpi2/dht22"
+    unit_of_measurement: '%'
+    device_class: humidity
+    value_template: "{{ value_json.humidity }}"
+    unique_id: tempHum
+    
+
+device_tracker:
+  - platform: nmap_tracker
+    hosts: 
+      - 192.168.1.0/24
+      
+influxdb:
+
+      
+telegram_bot:
+  - platform: polling
+    api_key: <hiden>7310:AAGGy<hiden>
+    allowed_chat_ids:
+      - -<hiddenChatId>
+
+
+# Example configuration.yaml entry for the notifier
+notify:
+  - name: telegram_msg
+    platform: telegram
+    chat_id: -<hidenChatId>

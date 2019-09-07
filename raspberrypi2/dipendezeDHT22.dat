@@ -1,0 +1,6 @@
+Lista dipendenze moduli python(da inserire in docker):
+pip3 install Adafruit_DHT
+pip3 install paho-mqtt
+
+Knowing module path (da esportare in PYTHONPATH nel crontab)
+python3 -m site --user-site

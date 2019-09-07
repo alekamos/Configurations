@@ -1,0 +1,2 @@
+PYTHONPATH="/home/pi/.local/lib/python3.7/site-packages"
+* * * * * cd /home/pi/scripts/ && /usr/bin/python3 ./readDHT22AndTransmitDataMqtt.py >> /home/pi/scripts/log.dat 2>&1
