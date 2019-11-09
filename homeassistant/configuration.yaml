@@ -3,19 +3,12 @@ default_config:
 
 discovery:
 
-# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
-http:
-   base_url: <urlDominio>:8123
-   ssl_certificate: /config/ssl/cert.pem
-   ssl_key: /config/ssl/privkey.pem
 
-# Text to speech
-tts:
-  - platform: google_translate
 
 group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
+customize: !include customize.yaml
 
 
 # Example configuration.yaml entry
@@ -25,15 +18,9 @@ media_player:
     name: TV
     filename: webostv.conf
     timeout: 5
-    turn_on_action:
-      service: switch.turn_on
-      entity_id: switch.lg
+
       
-   
-switch:
-  - platform: wake_on_lan
-    name: lg
-    mac_address: "38:8c:50:6a:e5:f8"
+
         
 mqtt:
   discovery: true
@@ -100,8 +87,29 @@ sensor 3:
     device_class: humidity
     value_template: "{{ value_json.humidity }}"
     unique_id: tempHum
+sensor 4:
+  - platform: mqtt
+    name: "hum nodemcu"
+    state_topic: "nodemcu1/humidity"
+    unit_of_measurement: '%'
+    device_class: humidity
+    unique_id: tempHum2
+sensor 5:
+  - platform: mqtt
+    name: "temp nodemcu"
+    state_topic: "nodemcu1/temperature"
+    unit_of_measurement: 'C'
+    device_class: temperature
+    unique_id: tempInt2
+sensor 6:
+    - platform: min_max
+      name: "MediaCasa"
+      type: "mean"
+      round_digits: 2
+      entity_ids:
+        - sensor.temp_int
+        - sensor.temp_nodemcu
     
-
 device_tracker:
   - platform: nmap_tracker
     hosts: 
@@ -112,13 +120,40 @@ influxdb:
       
 telegram_bot:
   - platform: polling
-    api_key: <hiden>7310:AAGGy<hiden>
+    api_key: <apikey>
     allowed_chat_ids:
-      - -<hiddenChatId>
+      - -<chatid>
 
 
 # Example configuration.yaml entry for the notifier
 notify:
   - name: telegram_msg
     platform: telegram
-    chat_id: -<hidenChatId>
+    chat_id: -<chatid>
+    
+    
+switch:  
+  - platform: mqtt
+    name: "Esp8266ThermostatSwitch"
+    command_topic: "nodemcu/caldaia/command"
+    state_topic: "nodemcu/caldaia/status"
+    qos: 0
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: false
+    
+    
+climate:
+  - platform: generic_thermostat
+    name: ESP8266Themostat
+    heater: switch.Esp8266ThermostatSwitch
+    target_sensor: sensor.MediaCasa
+    min_temp: 15
+    max_temp: 30
+    min_cycle_duration:
+      seconds: 3
+    target_temp: 20
+    away_temp: 17
+    cold_tolerance: 0.5
+    hot_tolerance: 0.5
+    precision: 0.1
