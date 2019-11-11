@@ -1,0 +1,35 @@
+  - name: Lavoro_mg
+    latitude: <latitudeHidden>
+    longitude: <longitudeHidden>
+    radius: 250
+
+  - name: Lavoro_ale
+    latitude: <latitudeHidden>
+    longitude: <longitudeHidden>
+    radius: 250
+
+  - name: Stazione_novara
+    latitude: <latitudeHidden>
+    longitude: <longitudeHidden>
+    radius: 250
+
+  - name: B&B_Novara
+    latitude: <latitudeHidden>
+    longitude: <longitudeHidden>
+    radius: 250
+
+  - name: Costanza_casa
+    latitude: <latitudeHidden>
+    longitude: <longitudeHidden>
+    radius: 250
+
+  - name: Calella_casa
+    latitude: <latitudeHidden>
+    longitude: <longitudeHidden>
+    radius: 250
+
+  # This will override the default home zone
+  - name: Home
+    latitude: <latitudeHidden>
+    longitude: <longitudeHidden>
+    radius: 250

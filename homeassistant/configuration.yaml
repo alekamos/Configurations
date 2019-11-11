@@ -1,5 +1,5 @@
 homeassistant:
-  name: Home
+  name: Docker-Homeassistant-AMG2C
   unit_system: metric
   # etc
 
@@ -12,7 +12,7 @@ discovery:
 
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
 http:
-   base_url: <dominio>
+   base_url: !secret dominio
    ssl_certificate: /config/ssl/fullchain.pem
    ssl_key: /config/ssl/privkey.pem
 
@@ -21,6 +21,7 @@ http:
 group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
+zone: !include zone.yaml
 
 
 
@@ -133,16 +134,16 @@ influxdb:
       
 telegram_bot:
   - platform: polling
-    api_key: <key>
+    api_key: !secret api_key
     allowed_chat_ids:
-      - -<chatid>
+      - !secret chat_id
 
 
 # Example configuration.yaml entry for the notifier
 notify:
   - name: telegram_msg
     platform: telegram
-    chat_id: -<chatid>
+    chat_id: !secret chat_id
     
     
 switch:  

@@ -1,0 +1,24 @@
+
+philips_hue_lan:
+  hide_if_away: false
+  icon:
+  mac: <HiddenMac>
+  name: Philips-hue.lan
+  picture:
+  track: true
+
+galaxy_tab_a_2018_105_lan:
+  hide_if_away: false
+  icon:
+  mac: <HiddenMac>
+  name: Galaxy-Tab-A-2018-105.lan
+  picture:
+  track: true
+
+myfastgate_lan:
+  hide_if_away: false
+  icon:
+  mac: <HiddenMac>
+  name: myfastgate.lan
+  picture:
+  track: true
