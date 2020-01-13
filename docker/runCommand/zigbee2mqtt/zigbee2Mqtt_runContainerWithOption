@@ -1,0 +1,2 @@
+--creare una cartella e all'interno eseguire questo comando. All'interno di data deve essere presente il configuration.yaml dell'applicazione
+docker run -it -v $(pwd)/data:/app/data --device=/dev/ttyACM0 -e TZ=Europe/Rome -v /run/udev:/run/udev:ro --privileged=true --name <nomeImmagine> <hashImagine>
