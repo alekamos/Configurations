@@ -1,0 +1,2 @@
+--creare una cartella e all'interno eseguire questo comando. All'interno di data deve essere presente il configuration.yaml dell'applicazione
+docker run -it --name=dokuwiki -e PUID=1000 -e PGID=1000 -e TZ=Europe/Rome -e APP_URL=/dokuwiki -p 8082:80 -p 443:443 -v $(pwd)/config:/config linuxserver/dokuwiki

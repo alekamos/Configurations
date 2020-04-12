@@ -1,0 +1,26 @@
+automation:
+  ###################
+  ## Toggle the light
+  ###################
+  - id: ikea_switch_destro_click
+    alias: ikea switch dx click
+    trigger:
+      - platform: state
+        entity_id: sensor.0x14b457fffe723063_action
+        to: "arrow_right_click"
+    condition:
+    action:
+      - service: light.toggle
+        data:
+          entity_id: light.hue_white_lamp_2
+  - id: ikea_switch_sinistro_click
+    alias: ikea switch sx click
+    trigger:
+      - platform: state
+        entity_id: sensor.0x14b457fffe723063_action
+        to: "arrow_left_click"
+    condition:
+    action:
+      - service: light.toggle
+        data:
+          entity_id: light.0x7cb03eaa0a04068c_light
