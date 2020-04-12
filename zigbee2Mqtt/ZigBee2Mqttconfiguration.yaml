@@ -5,10 +5,19 @@ mqtt:
   server: 'mqtt://192.168.1.53:1883'
 serial:
   port: /dev/ttyACM0
+advanced:
+  log_level: debug
 devices:
   '0x00158d0002c63968':
     friendly_name: doorSensorXiaomi_x1
     retain: false
   '0x00158d0002d7740f':
-    friendly_name: '0x00158d0002d7740f'
+    friendly_name: temperatureXiaomi
     retain: false
+  '0x14b457fffe723063':
+    friendly_name: ikeaTradfri
+    retain: false
+  '0x7cb03eaa0a04068c':
+    friendly_name: osram_1
+  '0x7cb03eaa0a034fd8':
+    friendly_name: osram_2
