@@ -9,17 +9,17 @@ DEL_DOKU=$(grep deleting $FILENAME_DOKU | wc -l)
 SAV_DOKU=$(grep xfer $FILENAME_DOKU | wc -l)
 echo -e "rsync end\nsaved file: $SAV_DOKU\t deleting files: $DEL_DOKU"
 echo "start rsync photo.."
-rsync -vrah --delete --progress --password-file --exclude @eaDir --exclude Thumbs.db /volume1/photo hyperbackup@192.168.1.50::hyperbackup> $FILENAME_PHOTO
+rsync -vrah --delete --progress --password-file=rsync_pass --exclude @eaDir --exclude Thumbs.db /volume1/photo hyperbackup@192.168.1.50::hyperbackup> $FILENAME_PHOTO
 DEL_PHOTO=$(grep deleting $FILENAME_PHOTO | wc -l)
 SAV_PHOTO=$(grep xfer $FILENAME_PHOTO | wc -l)
 echo -e "rsync end\nsaved file: $SAV_PHOTO\t deleting files: $DEL_PHOTO"
 echo "start rsync raw.."
-rsync -vrah --delete --progress --password-file --exclude @eaDir --exclude Thumbs.db /volume1/cellar/archivioPhotoRaw hyperbackup@192.168.1.50::hyperbackup> $FILENAME_RAW
+rsync -vrah --delete --progress --password-file=rsync_pass --exclude @eaDir --exclude Thumbs.db /volume1/cellar/archivioPhotoRaw hyperbackup@192.168.1.50::hyperbackup> $FILENAME_RAW
 DEL_RAW=$(grep deleting $FILENAME_RAW | wc -l)
 SAV_RAW=$(grep xfer $FILENAME_RAW | wc -l)
 echo -e "rsync end\nsaved file: $SAV_RAW\t deleting files: $DEL_RAW"
 echo "start rsync video.."
-rsync -vrah --delete --progress --password-file --exclude @eaDir --exclude Thumbs.db /volume1/video hyperbackup@192.168.1.50::hyperbackup> $FILENAME_VIDEO
+rsync -vrah --delete --progress --password-file=rsync_pass --exclude @eaDir --exclude Thumbs.db /volume1/video hyperbackup@192.168.1.50::hyperbackup> $FILENAME_VIDEO
 DEL_VIDEO=$(grep deleting $FILENAME_VIDEO | wc -l)
 SAV_VIDEO=$(grep xfer $FILENAME_VIDEO | wc -l)
 echo -e "rsync end\nsaved file: $SAV_VIDEO\t deleting files: $DEL_VIDEO"
